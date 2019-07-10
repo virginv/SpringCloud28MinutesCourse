@@ -1,0 +1,75 @@
+
+http://localhost:8888/limits-service/dev 
+http://localhost:8080/limits 
+http://localhost:8000/currency-exchange/from/USD/to/BS 
+http://localhost:8001/currency-exchange/from/USD/to/MNX 
+
+-- database console
+http://localhost:8000/h2-console 
+
+
+http://localhost:8100/currency-converter/from/USD/to/MNX/quantity/10 
+-- with ribbon
+http://localhost:8100/currency-converter-feign/from/USD/to/MNX/quantity/10 
+
+-- Eureka
+http://localhost:8761/
+
+-- URLs throught Zuul --> http://localhost:8765/{application-name}/uri
+http://localhost:8765/currency-exchange-service/currency-exchange/from/USD/to/BS
+http://localhost:8765/currency-conversion-service/currency-converter-feign/from/USD/to/MNX/quantity/10
+
+
+--rabbitmq
+http://localhost:15672
+
+
+--zipkin
+http://localhost:9411/zipkin/
+
+--start zipkiin with rabbitmq    (/home/virginia/zipkin.jar)
+RABBIT_URI=amqp://localhost java -jar zipkin.jar    
+
+
+In order to trace Eureka naming server in Zipkin, please add below zipkin dependencies in Eureka naming server microservice in pom.xml 
+and run all the instances, currency-exchange-service, currency-conversion-service, Eurekanamingserver, ZuulApiGateway and ALSO RabbitMQ and Zipkin jar.
+Note: In my view, if we have multiple microservices are running with many instances, in order to find distributed tracking across all the services we will be using Zipkin to trace all the requests so that we can find the root cause effectively.
+
+Could you please try and let me know once use this option.
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-sleuth</artifactId>
+</dependency>
+<dependency>
+	<groupId>org.springframework.cloud</groupId>
+	<artifactId>spring-cloud-starter-zipkin</artifactId>
+</dependency>
+
+
+
+--FOR RABBIN
+<dependency>
+	<groupId>org.springframework.amqp</groupId>
+	<artifactId>spring-rabbit</artifactId>
+</dependency>
+
+
+
+--Actuator Refresh -> By default, all endpoints except for shutdown are enabled
+# Include all endpoints 
+management.endpoints.web.exposure.include=*
+http://localhost:8080/actuator/refresh
+http://localhost:8080/actuator/bus-refresh
+
+
+git remote add origin https://github.com/virginv/spring-cloud.git
+
+git@github.com:virginv/spring-cloud.git
+
+https://github.com/virginv/spring-cloud
+
+git remote add origin https://github.com/virginv/spring-cloud-config-server.git
+
+git remote add origin https://github.com/virginv/git-localconfig-repo.git
+
+git push -u origin master
